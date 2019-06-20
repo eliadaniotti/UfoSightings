@@ -5,7 +5,11 @@
 package it.polito.tdp.ufo;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.ufo.model.Anno;
+import it.polito.tdp.ufo.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -20,14 +24,20 @@ public class UfoController {
     private URL location;
 
     @FXML // fx:id="boxAnno"
-    private ComboBox<?> boxAnno; // Value injected by FXMLLoader
+    private ComboBox<Anno> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxStato"
-    private ComboBox<?> boxStato; // Value injected by FXMLLoader
+    private ComboBox<String> boxStato; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
 
+    private Model model;
+    
+    public void setModel(Model model) {
+    	this.model=model;
+    	boxAnno.getItems().addAll(model.getAnni());
+    }
     @FXML
     void handleAnalizza(ActionEvent event) {
 
