@@ -8,6 +8,8 @@ import java.util.Map;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
+import org.jgrapht.traverse.DepthFirstIterator;
+import org.jgrapht.traverse.GraphIterator;
 
 import it.polito.tdp.ufo.db.SightingsDAO;
 
@@ -39,6 +41,32 @@ public class Model {
 				grafo.addEdge(v, c);
 		}
 		
-		System.out.println(grafo.vertexSet().size() + grafo.edgeSet().size());
+		System.out.println(grafo.vertexSet().size() +" "+ grafo.edgeSet());
 	}
+	
+	public SimpleDirectedGraph<String, DefaultEdge> getGrafo(){
+		return grafo;
+	}
+	
+	public List<String> getVicini(String stato){
+		List<String> vicini = new LinkedList<String>();
+		for(String v : grafo.vertexSet())
+			if(grafo.containsEdge(v, stato) || grafo.containsEdge(stato, v))
+				if(!vicini.contains(v))
+					vicini.add(v);
+		return vicini;
+	}
+	
+	public List<String> getRaggiungibili(String stato){
+		List<String> ragg = new LinkedList<String>();
+		GraphIterator<String, DefaultEdge> dfi = new DepthFirstIterator<String, DefaultEdge>(grafo, stato);
+		
+		while(dfi.hasNext()) {
+			ragg.add(dfi.next());
+		}
+		
+		ragg.remove(stato);
+		return ragg;
+	}
+
 }

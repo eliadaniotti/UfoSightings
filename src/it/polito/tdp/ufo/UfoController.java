@@ -40,11 +40,32 @@ public class UfoController {
     }
     @FXML
     void handleAnalizza(ActionEvent event) {
-
+    	txtResult.clear();
+    	String stato = boxStato.getValue();
+    	
+    	if(stato == null)
+    		txtResult.setText("Scegli uno stato");
+    	
+    	txtResult.appendText("Elenco vicini di " + stato + ": ");
+    	for(String v: model.getVicini(stato))
+    		txtResult.appendText(v+" ");
+    	
+    	txtResult.appendText("\nElenco stati raggiungibili da " + stato + ": ");
+    	for(String v: model.getRaggiungibili(stato))
+    		txtResult.appendText(v+" ");
     }
 
     @FXML
     void handleAvvistamenti(ActionEvent event) {
+    	Anno anno = boxAnno.getValue();
+    	if(anno==null) {
+    		txtResult.setText("Selezionare un anno dal menu a tendina");
+    		return;
+    	}
+    	
+    	model.creaGrafo(anno.getYear());
+    	
+    	boxStato.getItems().addAll(model.getGrafo().vertexSet());
 
     }
 

@@ -96,7 +96,7 @@ public class SightingsDAO {
 	}
 	
 	public List<String> getAllStati(int anno) {
-		String sql = "SELECT distinct state FROM sighting WHERE year(datetime) = ?" ;
+		String sql = "SELECT distinct state FROM sighting WHERE year(datetime) = ? and country='us'" ;
 		List<String> list = new ArrayList<>() ;
 		
 		try {
@@ -127,7 +127,7 @@ public class SightingsDAO {
 	}
 	
 	public List<String> statiCollegati(String s1, int anno) {
-		String sql = "SELECT distinct s2.state FROM sighting AS s1, sighting AS s2 WHERE s1.DATETIME < s2.DATETIME AND s1.state=? AND s2.state!=? AND s2.country='us' AND s1.year(datetime) =? AND s2.year(datetime)  =?";
+		String sql = "SELECT distinct s2.state FROM sighting AS s1, sighting AS s2 WHERE s1.DATETIME < s2.DATETIME AND s1.state=? AND s2.state!=? AND s2.country='us' AND year(s1.datetime) =? AND year(s2.datetime)  =?";
 		List<String> list = new ArrayList<>() ;
 		
 		try {
